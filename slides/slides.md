@@ -30,17 +30,17 @@ transition: fade-out
 
 | Stage | Gradle technique |
 |---|---|
-| 🏠 Ithaca | Single-module build |
-| ⛵ Setting sail | Multi-module build |
-| 🗿 The Cyclops's cave | `buildSrc` |
-| 🎵 The Sirens | Version catalogs & BOMs |
-| 🏠 Ithaca, regained | Published, shared plugin |
+| <StageIcon name="column" :size="24" /> Ithaca | Single-module build |
+| <StageIcon name="ship" :size="24" /> Setting sail | Multi-module build |
+| <StageIcon name="eye" :size="24" /> The Cyclops's cave | `buildSrc` |
+| <StageIcon name="waves" :size="24" /> The Sirens | Version catalogs & BOMs |
+| <StageIcon name="laurel" :size="24" /> Ithaca, regained | Published, shared plugin |
 
 ---
 transition: slide-left
 ---
 
-# 🏠 Ithaca
+# <StageIcon name="column" :size="40" /> Ithaca
 
 Single-module build — home base, where every build starts
 
@@ -52,7 +52,7 @@ TODO: content
 transition: slide-left
 ---
 
-# ⛵ Setting Sail
+# <StageIcon name="ship" :size="40" /> Setting Sail
 
 Multi-module build — a fleet of modules, one voyage
 
@@ -64,7 +64,7 @@ TODO: content
 transition: slide-left
 ---
 
-# 🗿 The Cyclops's Cave
+# <StageIcon name="eye" :size="40" /> The Cyclops's Cave
 
 `buildSrc` — powerful, but trapped on one island
 
@@ -76,7 +76,7 @@ TODO: content
 transition: slide-left
 ---
 
-# 🎵 The Sirens
+# <StageIcon name="waves" :size="40" /> The Sirens
 
 Version catalogs & BOMs — the tempting shortcut of centralizing versions
 
@@ -88,7 +88,7 @@ TODO: content
 transition: slide-left
 ---
 
-# 🏠 Ithaca, Regained
+# <StageIcon name="laurel" :size="40" /> Ithaca, Regained
 
 Published, shared plugin — home again, transformed
 
