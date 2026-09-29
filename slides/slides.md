@@ -4,6 +4,9 @@ title: The Gradle Odyssey
 info: |
   ## The Gradle Odyssey
   A journey through Gradle build reuse — version catalogs, BOMs, buildSrc, and shared plugins.
+fonts:
+  serif: 'Cormorant Garamond'
+  provider: google
 class: text-center
 transition: slide-left
 ---

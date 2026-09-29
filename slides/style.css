@@ -1,0 +1,38 @@
+/* Odyssey "Midnight Aegean" palette + typography.
+   Scoped to .slidev-layout (not :root/body) per Slidev's convention, so these
+   styles don't leak into the presenter UI. */
+
+:root {
+  --odyssey-navy: #0d1b2a;
+  --odyssey-deep-sea: #1b3a4b;
+  --odyssey-gold: #d4af37;
+  --odyssey-parchment: #e8dcc4;
+  --odyssey-blue-grey: #a8c5d4;
+  --odyssey-wine: #7a1f2b;
+}
+
+.slidev-layout {
+  background: linear-gradient(135deg, var(--odyssey-navy) 0%, var(--odyssey-deep-sea) 100%);
+  color: var(--odyssey-parchment);
+}
+
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  color: var(--odyssey-parchment);
+}
+
+.slidev-layout a {
+  color: var(--odyssey-gold);
+}
+
+.slidev-layout table th {
+  color: var(--odyssey-gold);
+}
+
+.slidev-layout table th,
+.slidev-layout table td {
+  border-color: rgba(212, 175, 55, 0.3);
+}
