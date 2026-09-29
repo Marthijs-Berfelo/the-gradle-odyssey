@@ -12,6 +12,7 @@ dist/
 # Claude
 .claude/plans/
 .claude/specs/
+.superpowers/
 
 # IDE
 .idea/
