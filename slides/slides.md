@@ -25,22 +25,27 @@ A journey through reusing Gradle build configuration
 </div>
 
 ---
-transition: slide-down
+transition: slide-left
 ---
 
 <div class="flex flex-col items-center justify-center h-full gap-4">
-  <Helmsman :size="140" />
+  <img
+    src="/images/helmsman.jpg"
+    alt="Marthijs Berfelo as a Greek helmsman"
+    class="rounded-full object-cover"
+    style="width: 180px; height: 180px; border: 3px solid var(--odyssey-gold); box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.15)"
+  />
   <div class="text-center">
     <div class="text-2xl italic" style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--odyssey-parchment)">Marthijs Berfelo</div>
     <div class="text-lg" style="color: var(--odyssey-gold)">Software Engineer — your helmsman for this voyage</div>
     <div class="text-base mt-2 opacity-80">Charting safer courses through multi-module Gradle builds</div>
   </div>
-  <div class="flex gap-4 text-xl mt-2">
-    <a href="https://github.com/Marthijs-Berfelo" target="_blank" class="slidev-icon-btn">
-      <carbon:logo-github />
+  <div class="flex flex-col items-center gap-1 text-base mt-2">
+    <a href="https://github.com/Marthijs-Berfelo" target="_blank" class="flex items-center gap-2" style="color: var(--odyssey-gold)">
+      <carbon:logo-github /> github.com/Marthijs-Berfelo
     </a>
-    <a href="https://www.linkedin.com/in/marthijs-berfelo-b393aa33/" target="_blank" class="slidev-icon-btn">
-      <carbon:logo-linkedin />
+    <a href="https://www.linkedin.com/in/marthijs-berfelo-b393aa33/" target="_blank" class="flex items-center gap-2" style="color: var(--odyssey-gold)">
+      <carbon:logo-linkedin /> linkedin.com/in/marthijs-berfelo
     </a>
   </div>
 </div>
