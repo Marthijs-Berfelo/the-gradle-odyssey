@@ -8,6 +8,8 @@ transition: slide-up
 
 `buildSrc` — powerful, but trapped on one island
 
+<br/>
+
 One `buildSrc` convention plugin replaces three copies of build boilerplate.
 
 <!--
@@ -25,17 +27,46 @@ whole thing over again.
 transition: slide-up
 ---
 
+<StageFooter icon="eye" name="The Cyclops's Cave" />
+
 ## Schematic View
 
 <div class="flex justify-center items-center h-full">
 
-```mermaid {theme: 'dark', scale: 0.85}
+```mermaid {scale: 0.85}
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#3d2f14',
+  'primaryTextColor': '#e8dcc4',
+  'primaryBorderColor': '#d4af37',
+  'lineColor': '#d4af37',
+  'edgeLabelBackground': '#0d1b2a',
+  'fontFamily': 'Georgia, serif'
+}}}%%
 flowchart LR
-    heroes["heroes-service"] --> apispec["api-spec"]
-    monsters["monsters-service"] --> apispec
-    buildSrc["buildSrc"] -.-> heroes
-    buildSrc -.-> monsters
-    buildSrc -.-> apispec
+    subgraph repo["one repo"]
+        direction LR
+        subgraph h["heroes-service"]
+            hb["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        subgraph m["monsters-service"]
+            mb["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        subgraph a["api-spec"]
+            ab["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        plugin["buildSrc<br/>convention plugin"]:::plugin
+        plugin -.-> hb
+        plugin -.-> mb
+        plugin -.-> ab
+        h --> a
+        m --> a
+    end
+    style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
+    classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
 ```
 
 </div>
@@ -43,6 +74,8 @@ flowchart LR
 ---
 transition: slide-down
 ---
+
+<StageFooter icon="eye" name="The Cyclops's Cave" />
 
 ## Code Demo
 
@@ -54,7 +87,11 @@ TODO: content
 transition: slide-down
 ---
 
+<StageFooter icon="eye" name="The Cyclops's Cave" />
+
 ## Pros & Cons
+
+<br/>
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
@@ -79,9 +116,11 @@ transition: slide-down
 transition: slide-left
 ---
 
+<StageFooter icon="eye" name="The Cyclops's Cave" />
+
 ## Conclusion
 
-<div class="flex justify-center items-center h-full text-center text-xl">
+<div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
 <code>buildSrc</code> is a cave, not a harbor — nothing inside it can leave this repo.
 

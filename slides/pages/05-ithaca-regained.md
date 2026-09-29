@@ -8,6 +8,8 @@ transition: slide-up
 
 Published, shared plugin — home again, transformed
 
+<br/>
+
 `buildSrc` becomes a published plugin — reusable far beyond this repo.
 
 <!--
@@ -24,23 +26,52 @@ is now build logic any project can adopt, with no copying and no drift.
 transition: slide-up
 ---
 
+<StageFooter icon="laurel" name="Ithaca, Regained" />
+
 ## Schematic View
 
 <div class="flex justify-center items-center h-full">
 
-```mermaid {theme: 'dark', scale: 0.8}
+```mermaid {scale: 0.75}
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#3d2f14',
+  'primaryTextColor': '#e8dcc4',
+  'primaryBorderColor': '#d4af37',
+  'lineColor': '#d4af37',
+  'edgeLabelBackground': '#0d1b2a',
+  'fontFamily': 'Georgia, serif'
+}}}%%
 flowchart LR
-    heroes["heroes-service"] --> apispec["api-spec"]
-    monsters["monsters-service"] --> apispec
-    plugin["build-logic-plugin (published)"]:::external -.-> heroes
-    plugin -.-> monsters
-    plugin -.-> apispec
-    catalog["libs.versions.toml"] -.->|versions| heroes
-    catalog -.->|versions| monsters
-    catalog -.->|versions| apispec
+    subgraph repo["one repo"]
+        direction LR
+        subgraph h["heroes-service"]
+            hb["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        subgraph m["monsters-service"]
+            mb["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        subgraph a["api-spec"]
+            ab["build.gradle.kts<br/>applies plugin"]:::config
+        end
+        h --> a
+        m --> a
+    end
+    plugin["build-logic-plugin<br/>(published)"]:::plugin
+    catalog["odyssey-catalog<br/>(published)"]:::catalog
+    plugin -.-> hb
+    plugin -.-> mb
+    plugin -.-> ab
+    catalog -.->|versions| hb
+    catalog -.->|versions| mb
+    catalog -.->|versions| ab
     catalog -.->|versions| plugin
-
-    classDef external fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
+    style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
+    classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
+    classDef catalog fill:#1b3a4b,stroke:#a8c5d4,stroke-width:2px,color:#e8dcc4
 ```
 
 </div>
@@ -48,6 +79,8 @@ flowchart LR
 ---
 transition: slide-down
 ---
+
+<StageFooter icon="laurel" name="Ithaca, Regained" />
 
 ## Code Demo
 
@@ -59,7 +92,11 @@ TODO: content
 transition: slide-down
 ---
 
+<StageFooter icon="laurel" name="Ithaca, Regained" />
+
 ## Pros & Cons
+
+<br/>
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
@@ -84,9 +121,11 @@ transition: slide-down
 transition: slide-left
 ---
 
+<StageFooter icon="laurel" name="Ithaca, Regained" />
+
 ## Conclusion
 
-<div class="flex justify-center items-center h-full text-center text-xl">
+<div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
 Home again, transformed — build logic any project can adopt, with no copying, no drift.
 

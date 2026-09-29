@@ -8,6 +8,8 @@ transition: slide-up
 
 Multi-module build — a fleet of modules, one voyage
 
+<br/>
+
 Hero and Monster set sail as their own services, sharing one `api-spec`.
 
 <!--
@@ -24,14 +26,41 @@ build setup. That duplication is this stage's problem to notice.
 transition: slide-up
 ---
 
+<StageFooter icon="ship" name="Setting Sail" />
+
 ## Schematic View
 
 <div class="flex justify-center items-center h-full">
 
-```mermaid {theme: 'dark', scale: 1.1}
+```mermaid {scale: 0.95}
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#3d2f14',
+  'primaryTextColor': '#e8dcc4',
+  'primaryBorderColor': '#d4af37',
+  'lineColor': '#d4af37',
+  'edgeLabelBackground': '#0d1b2a',
+  'fontFamily': 'Georgia, serif'
+}}}%%
 flowchart LR
-    heroes["heroes-service"] --> apispec["api-spec"]
-    monsters["monsters-service"] --> apispec
+    subgraph repo["one repo"]
+        direction LR
+        subgraph h["heroes-service"]
+            hb["build.gradle.kts"]:::config
+        end
+        subgraph m["monsters-service"]
+            mb["build.gradle.kts"]:::config
+        end
+        subgraph a["api-spec"]
+            ab["build.gradle.kts"]:::config
+        end
+        h --> a
+        m --> a
+    end
+    style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
 ```
 
 </div>
@@ -39,6 +68,8 @@ flowchart LR
 ---
 transition: slide-down
 ---
+
+<StageFooter icon="ship" name="Setting Sail" />
 
 ## Code Demo
 
@@ -50,7 +81,11 @@ TODO: content
 transition: slide-down
 ---
 
+<StageFooter icon="ship" name="Setting Sail" />
+
 ## Pros & Cons
+
+<br/>
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
@@ -75,9 +110,11 @@ transition: slide-down
 transition: slide-left
 ---
 
+<StageFooter icon="ship" name="Setting Sail" />
+
 ## Conclusion
 
-<div class="flex justify-center items-center h-full text-center text-xl">
+<div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
 Independent deployability, at the cost of the same build setup — copy-pasted three times over.
 
