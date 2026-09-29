@@ -42,36 +42,31 @@ transition: slide-up
   'fontFamily': 'Georgia, serif'
 }}}%%
 flowchart LR
-    subgraph repo["one repo"]
-        direction LR
-        subgraph h["heroes-service"]
-            hb["build.gradle.kts<br/>applies plugin"]:::config
-        end
-        subgraph m["monsters-service"]
-            mb["build.gradle.kts<br/>applies plugin"]:::config
-        end
-        subgraph a["api-spec"]
-            ab["build.gradle.kts<br/>applies plugin"]:::config
-        end
-        h --> a
-        m --> a
+    subgraph h["heroes-service<br/>(own repo)"]
+        hb["build.gradle.kts<br/>applies plugin"]:::config
+    end
+    subgraph m["monsters-service<br/>(own repo)"]
+        mb["build.gradle.kts<br/>applies plugin"]:::config
+    end
+    subgraph a["api-spec<br/>(own repo)"]
+        ab["build.gradle.kts<br/>applies plugin"]:::config
     end
     plugin["build-logic-plugin<br/>(published)"]:::plugin
     catalog["odyssey-catalog<br/>(published)"]:::catalog
-    plugin -.-> hb
-    plugin -.-> mb
-    plugin -.-> ab
-    catalog -.->|versions| hb
-    catalog -.->|versions| mb
-    catalog -.->|versions| ab
-    catalog -.->|versions| plugin
-    style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
-    style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
-    style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
-    style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    plugin --> hb
+    plugin --> mb
+    plugin --> ab
+    catalog -->|versions| hb
+    catalog -->|versions| mb
+    catalog -->|versions| ab
+    catalog -->|versions| plugin
+    style h fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style m fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style a fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
     classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
     classDef catalog fill:#1b3a4b,stroke:#a8c5d4,stroke-width:2px,color:#e8dcc4
+    linkStyle default stroke-dasharray:4 4
 ```
 
 </div>

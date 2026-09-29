@@ -123,8 +123,13 @@ class: text-center
 
 <WaveDivider />
 
-<div class="abs-br m-6 text-xl">
-  <a href="https://github.com/Marthijs-Berfelo/the-gradle-odyssey" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
+<div class="flex flex-col items-center justify-center gap-3 mt-6">
+  <img
+    src="/images/github-qr.svg"
+    alt="QR code linking to the GitHub repository"
+    style="width: 192px; height: 192px; border: 3px solid var(--odyssey-gold); border-radius: 12px; background: var(--odyssey-gold); padding: 10px; box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.15), 0 8px 24px rgba(0, 0, 0, 0.35)"
+  />
+  <a href="https://github.com/Marthijs-Berfelo/the-gradle-odyssey" target="_blank" class="flex items-center gap-2 text-lg" style="color: var(--odyssey-gold)">
+    <carbon:logo-github /> github.com/Marthijs-Berfelo/the-gradle-odyssey
   </a>
 </div>
