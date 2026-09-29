@@ -1,6 +1,7 @@
 ---
 theme: seriph
 title: The Gradle Odyssey
+favicon: /favicon.svg
 info: |
   ## The Gradle Odyssey
   A journey through Gradle build reuse — version catalogs, BOMs, buildSrc, and shared plugins.
