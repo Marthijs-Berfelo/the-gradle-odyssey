@@ -84,6 +84,37 @@ src: ./pages/05-ithaca-regained.md
 ---
 
 ---
+transition: slide-left
+class: text-center
+---
+
+# The Journey, Complete
+
+<WaveDivider />
+
+Five stages, one build — from a single module to a plugin the world can reuse.
+
+<div class="flex justify-center mt-4" style="transform: scale(0.6); transform-origin: top center;">
+  <JourneyTrail />
+</div>
+
+<!--
+Ithaca: one module, one build — simple, but Hero and Monster couldn't ship independently.
+
+Setting Sail: split into services won independent deployability, at the cost of
+copy-pasted build setup.
+
+The Cyclops's Cave: buildSrc deduplicated that setup — but stayed trapped in this repo.
+
+The Sirens: a version catalog aligned every dependency — but build logic was still landlocked.
+
+Ithaca, Regained: buildSrc and the catalog both became published artifacts — true reuse,
+no copying, no drift.
+
+That's the odyssey: from a build that couldn't be shared, to one that can sail anywhere.
+-->
+
+---
 layout: center
 class: text-center
 ---
