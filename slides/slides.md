@@ -38,27 +38,22 @@ if he had, he might never have set sail.
 -->
 
 ---
-transition: slide-left
 src: ./pages/01-ithaca.md
 ---
 
 ---
-transition: slide-left
 src: ./pages/02-setting-sail.md
 ---
 
 ---
-transition: slide-left
 src: ./pages/03-cyclops-cave.md
 ---
 
 ---
-transition: slide-left
 src: ./pages/04-sirens.md
 ---
 
 ---
-transition: slide-left
 src: ./pages/05-ithaca-regained.md
 ---
 
