@@ -8,8 +8,17 @@ transition: slide-up
 
 `buildSrc` — powerful, but trapped on one island
 
+One `buildSrc` convention plugin replaces three copies of build boilerplate.
+
 <!--
-TODO: content
+The three modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
+OpenAPI-codegen setup. buildSrc lets us pull that duplicated logic into one convention
+plugin, applied by heroes-service, monsters-service, and api-spec alike — a single source
+of truth for this repo's build logic.
+
+The catch: buildSrc only exists inside this repo. Like the Cyclops's cave, it's powerful
+but sealed off — nothing inside it can be reused by any other project without copying the
+whole thing over again.
 -->
 
 ---
@@ -72,4 +81,14 @@ transition: slide-left
 
 ## Conclusion
 
-<code>buildSrc</code> deduplicated the build logic beautifully — one source of truth, for this repo. But that's exactly its limit: buildSrc is a cave, not a harbor. Nothing inside it can leave.
+<div class="flex justify-center items-center h-full text-center text-xl">
+
+<code>buildSrc</code> is a cave, not a harbor — nothing inside it can leave this repo.
+
+</div>
+
+<!--
+buildSrc deduplicated the build logic beautifully — one source of truth, for this repo.
+But that's exactly its limit: buildSrc is a cave, not a harbor. Nothing inside it can leave,
+so any other project wanting this build logic has to copy the whole cave.
+-->

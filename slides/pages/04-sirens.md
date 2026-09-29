@@ -8,8 +8,15 @@ transition: slide-up
 
 Version catalogs & BOMs — the tempting shortcut of centralizing versions
 
+One `libs.versions.toml` aligns every dependency version, everywhere.
+
 <!--
-TODO: content
+buildSrc deduplicated our build logic, but dependency versions are still hardcoded and
+drifting across the three modules and buildSrc itself. A version catalog — gradle/libs.versions.toml —
+becomes the single source of truth for every version, referenced from every module and buildSrc.
+
+Tempting as it sounds, this only solves version drift. It doesn't solve the real limitation
+from the last stage: the build logic itself is still landlocked in this one repo.
 -->
 
 ---
@@ -76,4 +83,14 @@ transition: slide-left
 
 ## Conclusion
 
-Version catalogs centralize what <code>buildSrc</code> alone couldn't: consistent versions across every module, with no drift. But the build logic itself is still landlocked in this one repo — the real prize is still ahead.
+<div class="flex justify-center items-center h-full text-center text-xl">
+
+Versions are aligned everywhere — but the build logic itself is still landlocked.
+
+</div>
+
+<!--
+Version catalogs centralize what buildSrc alone couldn't: consistent versions across
+every module, with no drift. But the build logic itself is still landlocked in this
+one repo — the real prize, true cross-repo reuse, is still ahead.
+-->
