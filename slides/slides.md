@@ -39,73 +39,28 @@ if he had, he might never have set sail.
 
 ---
 transition: slide-left
+src: ./pages/01-ithaca.md
 ---
-
-# <StageIcon name="column" :size="40" /> Ithaca
-
-<WaveDivider />
-
-Single-module build — home base, where every project starts
-
-<!--
-TODO: content
--->
 
 ---
 transition: slide-left
+src: ./pages/02-setting-sail.md
 ---
-
-# <StageIcon name="ship" :size="40" /> Setting Sail
-
-<WaveDivider />
-
-Multi-module build — a fleet of modules, one voyage
-
-<!--
-TODO: content
--->
 
 ---
 transition: slide-left
+src: ./pages/03-cyclops-cave.md
 ---
-
-# <StageIcon name="eye" :size="40" /> The Cyclops's Cave
-
-<WaveDivider />
-
-`buildSrc` — powerful, but trapped on one island
-
-<!--
-TODO: content
--->
 
 ---
 transition: slide-left
+src: ./pages/04-sirens.md
 ---
-
-# <StageIcon name="waves" :size="40" /> The Sirens
-
-<WaveDivider />
-
-Version catalogs & BOMs — the tempting shortcut of centralizing versions
-
-<!--
-TODO: content
--->
 
 ---
 transition: slide-left
+src: ./pages/05-ithaca-regained.md
 ---
-
-# <StageIcon name="laurel" :size="40" /> Ithaca, Regained
-
-<WaveDivider />
-
-Published, shared plugin — home again, transformed
-
-<!--
-TODO: content
--->
 
 ---
 layout: center
