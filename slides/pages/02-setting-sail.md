@@ -8,8 +8,16 @@ transition: slide-up
 
 Multi-module build — a fleet of modules, one voyage
 
+Hero and Monster set sail as their own services, sharing one `api-spec`.
+
 <!--
-TODO: content
+Ithaca's single module splits into three: heroes-service and monsters-service become
+independent Spring Boot deployables, each able to ship on its own schedule. A third module,
+api-spec, holds the OpenAPI contract both services depend on — the shared code that lets
+them talk to each other for the /encounters endpoint.
+
+The catch: each module now hand-rolls its own Spring Boot, Kotlin, and OpenAPI-codegen
+build setup. That duplication is this stage's problem to notice.
 -->
 
 ---
@@ -69,4 +77,14 @@ transition: slide-left
 
 ## Conclusion
 
-Splitting into services won us independent deployability, but it cost us — the same Spring Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled three times over. Time to stop copy-pasting build logic.
+<div class="flex justify-center items-center h-full text-center text-xl">
+
+Independent deployability, at the cost of the same build setup — copy-pasted three times over.
+
+</div>
+
+<!--
+Splitting into services won us independent deployability, but it cost us — the same
+Spring Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled three times over,
+once per module. Time to stop copy-pasting build logic.
+-->
