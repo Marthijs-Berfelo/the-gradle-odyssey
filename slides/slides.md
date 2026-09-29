@@ -30,13 +30,12 @@ transition: fade-out
 
 # The Journey
 
-| Stage | Gradle technique |
-|---|---|
-| <StageIcon name="column" :size="24" /> Ithaca | Single-module build |
-| <StageIcon name="ship" :size="24" /> Setting sail | Multi-module build |
-| <StageIcon name="eye" :size="24" /> The Cyclops's cave | `buildSrc` |
-| <StageIcon name="waves" :size="24" /> The Sirens | Version catalogs & BOMs |
-| <StageIcon name="laurel" :size="24" /> Ithaca, regained | Published, shared plugin |
+<JourneyTrail />
+
+<!--
+Odysseus had no idea how long the way home would be —
+if he had, he might never have set sail.
+-->
 
 ---
 transition: slide-left
@@ -46,7 +45,7 @@ transition: slide-left
 
 <WaveDivider />
 
-Single-module build — home base, where every build starts
+Single-module build — home base, where every project starts
 
 <!--
 TODO: content
