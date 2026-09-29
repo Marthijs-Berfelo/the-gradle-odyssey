@@ -14,6 +14,8 @@ transition: slide-left
 
 # The Gradle Odyssey
 
+<WaveDivider />
+
 A journey through reusing Gradle build configuration
 
 <div class="abs-br m-6 text-xl">
@@ -42,6 +44,8 @@ transition: slide-left
 
 # <StageIcon name="column" :size="40" /> Ithaca
 
+<WaveDivider />
+
 Single-module build — home base, where every build starts
 
 <!--
@@ -53,6 +57,8 @@ transition: slide-left
 ---
 
 # <StageIcon name="ship" :size="40" /> Setting Sail
+
+<WaveDivider />
 
 Multi-module build — a fleet of modules, one voyage
 
@@ -66,6 +72,8 @@ transition: slide-left
 
 # <StageIcon name="eye" :size="40" /> The Cyclops's Cave
 
+<WaveDivider />
+
 `buildSrc` — powerful, but trapped on one island
 
 <!--
@@ -77,6 +85,8 @@ transition: slide-left
 ---
 
 # <StageIcon name="waves" :size="40" /> The Sirens
+
+<WaveDivider />
 
 Version catalogs & BOMs — the tempting shortcut of centralizing versions
 
@@ -90,6 +100,8 @@ transition: slide-left
 
 # <StageIcon name="laurel" :size="40" /> Ithaca, Regained
 
+<WaveDivider />
+
 Published, shared plugin — home again, transformed
 
 <!--
@@ -102,6 +114,8 @@ class: text-center
 ---
 
 # Thank You
+
+<WaveDivider />
 
 <div class="abs-br m-6 text-xl">
   <a href="https://github.com/Marthijs-Berfelo/the-gradle-odyssey" target="_blank" class="slidev-icon-btn">
