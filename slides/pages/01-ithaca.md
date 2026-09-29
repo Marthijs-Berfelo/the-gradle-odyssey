@@ -8,6 +8,8 @@ transition: slide-up
 
 Single-module build — home base, where every project starts
 
+<br/>
+
 One module, **`odyssey-app`**, holds both of our domain entities:
 
 - **Hero** — `id`, `name`, `epithet`, `strength`
@@ -27,16 +29,31 @@ No modules to split, no boundaries to cross — just one build, one deployable, 
 transition: slide-up
 ---
 
+<StageFooter icon="column" name="Ithaca" />
+
 ## Schematic View
 
 <div class="flex justify-center items-center h-full">
 
-```mermaid {theme: 'dark', scale: 1.1}
+```mermaid {scale: 1.2}
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#3d2f14',
+  'primaryTextColor': '#e8dcc4',
+  'primaryBorderColor': '#d4af37',
+  'lineColor': '#d4af37',
+  'edgeLabelBackground': '#0d1b2a',
+  'fontFamily': 'Georgia, serif'
+}}}%%
 flowchart TB
-    subgraph app["odyssey-app"]
+    subgraph app["odyssey-app — one repo"]
         hero["hero package"]
         monster["monster package"]
+        build["build.gradle.kts"]:::config
     end
+    build -.->|configures| hero
+    build -.->|configures| monster
+    style app fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
 ```
 
 </div>
@@ -44,6 +61,8 @@ flowchart TB
 ---
 transition: slide-down
 ---
+
+<StageFooter icon="column" name="Ithaca" />
 
 ## Code Demo
 
@@ -55,7 +74,11 @@ TODO: content
 transition: slide-down
 ---
 
+<StageFooter icon="column" name="Ithaca" />
+
 ## Pros & Cons
+
+<br/>
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
@@ -80,9 +103,11 @@ transition: slide-down
 transition: slide-left
 ---
 
+<StageFooter icon="column" name="Ithaca" />
+
 ## Conclusion
 
-<div class="flex justify-center items-center h-full text-center text-xl">
+<div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
 One module, one build — but Heroes and Monsters need to ship on separate schedules.
 
