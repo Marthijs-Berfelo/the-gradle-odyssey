@@ -1,3 +1,7 @@
+---
+transition: slide-up
+---
+
 # <StageIcon name="eye" :size="40" /> The Cyclops's Cave
 
 <WaveDivider />
@@ -9,7 +13,7 @@ TODO: content
 -->
 
 ---
-transition: slide-down
+transition: slide-up
 ---
 
 ## Schematic View
@@ -29,7 +33,7 @@ TODO: content
 -->
 
 ---
-transition: slide-up
+transition: slide-down
 ---
 
 ## Pros & Cons
@@ -39,7 +43,7 @@ TODO: content
 -->
 
 ---
-transition: slide-up
+transition: slide-left
 ---
 
 ## Conclusion
