@@ -25,6 +25,27 @@ A journey through reusing Gradle build configuration
 </div>
 
 ---
+transition: slide-down
+---
+
+<div class="flex flex-col items-center justify-center h-full gap-4">
+  <Helmsman :size="140" />
+  <div class="text-center">
+    <div class="text-2xl italic" style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--odyssey-parchment)">Marthijs Berfelo</div>
+    <div class="text-lg" style="color: var(--odyssey-gold)">Software Engineer — your helmsman for this voyage</div>
+    <div class="text-base mt-2 opacity-80">Charting safer courses through multi-module Gradle builds</div>
+  </div>
+  <div class="flex gap-4 text-xl mt-2">
+    <a href="https://github.com/Marthijs-Berfelo" target="_blank" class="slidev-icon-btn">
+      <carbon:logo-github />
+    </a>
+    <a href="https://www.linkedin.com/in/marthijs-berfelo-b393aa33/" target="_blank" class="slidev-icon-btn">
+      <carbon:logo-linkedin />
+    </a>
+  </div>
+</div>
+
+---
 transition: fade-out
 ---
 
