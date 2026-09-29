@@ -9,6 +9,10 @@ dist/
 .slidev/
 *.local
 
+# Claude
+.claude/plans/
+.claude/specs/
+
 # IDE
 .idea/
 *.iml
