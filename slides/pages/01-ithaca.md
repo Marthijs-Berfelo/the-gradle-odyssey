@@ -8,16 +8,20 @@ transition: slide-up
 
 Single-module build — home base, where every project starts
 
-<div class="mt-6 text-base">
-
-Every odyssey begins at home. Our journey starts with **`odyssey-app`** — one Gradle module, one Spring Boot application, housing both of our domain entities side by side:
+One module, **`odyssey-app`**, holds both of our domain entities:
 
 - **Hero** — `id`, `name`, `epithet`, `strength`
 - **Monster** — `id`, `name`, `domain`, `danger`
 
-A single `build.gradle.kts` wires up Spring Boot, Kotlin, R2DBC, and Flyway for the whole app. No modules to split, no boundaries to cross — just one build, one deployable, one place to look.
+One build, one deployable.
 
-</div>
+<!--
+Every odyssey begins at home. Our journey starts with odyssey-app — one Gradle module,
+one Spring Boot application, housing both of our domain entities side by side.
+
+A single build.gradle.kts wires up Spring Boot, Kotlin, R2DBC, and Flyway for the whole app.
+No modules to split, no boundaries to cross — just one build, one deployable, one place to look.
+-->
 
 ---
 transition: slide-up
@@ -78,4 +82,14 @@ transition: slide-left
 
 ## Conclusion
 
-One module, one build — the simplest way to start a journey. But Heroes and Monsters have outgrown the same ship: they need to ship on separate schedules, and a single module can't give them that.
+<div class="flex justify-center items-center h-full text-center text-xl">
+
+One module, one build — but Heroes and Monsters need to ship on separate schedules.
+
+</div>
+
+<!--
+The simplest way to start a journey: one module, one build, nothing to configure.
+But Heroes and Monsters have outgrown the same ship — they need to ship on separate
+schedules, and a single module can't give them that. Time to set sail.
+-->
