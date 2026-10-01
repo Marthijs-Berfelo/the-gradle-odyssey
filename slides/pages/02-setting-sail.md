@@ -89,7 +89,7 @@ transition: slide-down
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
-    <h3 style="color: var(--odyssey-gold)">Pros</h3>
+    <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
       <li><code>heroes-service</code> and <code>monsters-service</code> deploy independently</li>
       <li>Clear module boundaries mirror service boundaries</li>
@@ -97,7 +97,7 @@ transition: slide-down
     </ul>
   </div>
   <div>
-    <h3 style="color: var(--odyssey-wine)">Cons</h3>
+    <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
       <li>Spring Boot, Kotlin, and OpenAPI-codegen setup copy-pasted across 3 modules</li>
       <li>Version bumps must be repeated in every module's <code>build.gradle.kts</code></li>

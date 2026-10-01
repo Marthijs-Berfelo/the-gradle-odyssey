@@ -1,0 +1,291 @@
+# The Gradle Odyssey — Story
+
+A continuous rehearsal script for the full talk, broken into named sections matching the
+deck's actual slide order. Each section is tagged with the slide-change cue so you know
+where you are in the deck while reading. This is a rehearsal aid — the per-slide speaker
+notes in `slides/slides.md` and `slides/pages/*.md` remain the source of truth and are not
+replaced by this document.
+
+## [BLANK SLIDE] Opening: the call to Troy
+
+Let me tell you a story. Long before he was known for a ten-year voyage home, Odysseus was
+a king content to rule Ithaca in peace. But years earlier, he'd sworn an oath — to Tyndareus,
+father of Helen — that if any man ever threatened her marriage, every suitor who'd competed
+for her hand would rally to defend it. When Paris of Troy takes Helen, Agamemnon calls in
+that oath, and Odysseus has no choice but to sail for Troy.
+
+Ten years of siege follow. Troy finally falls, but victory comes at a price: along the way,
+the Greeks offend the gods — drawing the wrath of Hera and Athena and blinding Poseidon's son, 
+the Cyclops Polyphemus. Those offenses curse the journey home. What should have been a
+short sail back to Ithaca stretches into ten more years of monsters, storms, and detours.
+
+Every project build starts the same way — simple, at home, in Ithaca. Then it's called away
+to fight its own Troy: more teams, working on the same product, and the way back home is
+never a straight line — it's full of messy shortcuts taken along the way.
+
+(Deliver this entirely from memory — no notes, step away from the lectern. Nothing on the
+slide should distract from eye contact with the room.)
+
+## [ADVANCE → Title Slide]
+
+Let the title land in silence for a beat before speaking again — "The Gradle Odyssey."
+
+## [ADVANCE → Bio Slide]
+
+I'm a software engineer with 10 years of experience. I'm passionate about making fitting
+software. I live in the Netherlands and love to travel, BBQ, and code.
+
+Just like Odysseus got his call to arms when Agamemnon invoked that old oath, every codebase
+eventually gets its own call to arms too — more teams, more services, all needing to build on
+the same foundation. Before we set sail, let me take the temperature of the room:
+
+- Who here uses Maven?
+- Who here uses Gradle?
+- Who's copy-pasted a build file between projects?
+
+Whatever you answered, you've felt this problem: reusing Gradle build configuration at scale,
+across projects and teams, without it drifting out of sync. That's the voyage I want to take
+you on today — so let's set sail.
+
+## [ADVANCE → Journey Trail Slide]
+
+Odysseus had no idea how long the way home would be — if he had, he might never have set
+sail. Our journey has five stops: Ithaca, where every build starts simple; Setting Sail,
+where splitting into services costs us duplicated setup; the Cyclops's Cave, where buildSrc
+deduplicates that setup but traps it in one repo; the Sirens, where a version catalog tempts
+us with a partial fix; and Ithaca Regained, where we finally publish build logic the way any
+project can adopt it. Let's set sail.
+
+## [ADVANCE → Ithaca: Introduction]
+
+Before the war, Odysseus is content — king of Ithaca, one household, one domain. But he swore
+an oath to Tyndareus: if ever Helen's marriage were threatened, every suitor would rally to
+defend it. When Paris takes her to Troy, Agamemnon calls in that oath, and Odysseus has no
+choice but to sail. One ship can't fight a ten-year siege alone — the campaign demands separate
+forces: infantry, cavalry, the fleet, each moving independently. That's the mobilization order
+our build receives too: Hero and Monster have outgrown the household. They need to become
+separate forces capable of shipping on their own.
+
+Every odyssey begins at home. Our journey starts with odyssey-app — one Gradle module,
+one Spring Boot application, housing both of our domain entities side by side.
+
+A single build.gradle.kts wires up Spring Boot, Kotlin, R2DBC, and Flyway for the whole app.
+No modules to split, no boundaries to cross — just one build, one deployable, one place to look.
+
+## [ADVANCE → Ithaca: Schematic View]
+
+One repo, one module: odyssey-app. Inside it, the hero package and the monster package sit
+side by side, both configured by the same single build.gradle.kts. There's no boundary between
+them at the build level — the diagram is deliberately almost too simple, because that's the
+whole point of this stage.
+
+## [ADVANCE → Ithaca: Code Demo]
+
+(Switch to the IDE.) This demo should prove just how little ceremony a single-module build
+needs: open odyssey-app's build.gradle.kts, show the Spring Boot, Kotlin, R2DBC, and Flyway
+plugins all declared once, then run the app and show both the hero and monster endpoints
+answering from the same running process. Transition out with: "simple, clean — but watch
+what happens when Hero and Monster need to stop shipping together."
+
+## [ADVANCE → Ithaca: Pros & Cons]
+
+The pros are real: zero setup, one command to build and run, a single dependency graph that's
+trivial to reason about, and no duplication because there's only one build to begin with. But
+the cons are what move us forward — Heroes and Monsters can't deploy independently, a change
+to either domain forces rebuilding and redeploying both, and team ownership boundaries blur
+inside one module.
+
+## [ADVANCE → Ithaca: Conclusion]
+
+The simplest way to start a journey: one module, one build, nothing to configure. But Heroes
+and Monsters have outgrown the same ship — they need to ship on separate schedules, and a
+single module can't give them that. Time to set sail.
+
+## [ADVANCE → Setting Sail: Introduction]
+
+Ithaca's single module splits into three: heroes-service and monsters-service become
+independent Spring Boot deployables, each able to ship on its own schedule. A third module,
+api-spec, holds the OpenAPI contract both services depend on — the shared code that lets them
+talk to each other for the /encounters endpoint. The catch: each module now hand-rolls its own
+Spring Boot, Kotlin, and OpenAPI-codegen build setup. That duplication is this stage's problem
+to notice.
+
+## [ADVANCE → Setting Sail: Schematic View]
+
+Still one repo, but now three modules: heroes-service, monsters-service, and api-spec. Each
+has its own build.gradle.kts, and both services depend on api-spec for the shared contract.
+Notice there's no line connecting the three build files to each other — that's exactly the
+problem: three independent, duplicated build configurations.
+
+## [ADVANCE → Setting Sail: Code Demo]
+
+(Switch to the IDE.) This demo should prove the duplication is real, not hypothetical: open
+heroes-service's build.gradle.kts side by side with monsters-service's, and show the identical
+Spring Boot, Kotlin, and OpenAPI-codegen blocks copy-pasted between them. Transition out with:
+"three copies of the same build logic — one typo in any of them, and we're debugging three
+different builds."
+
+## [ADVANCE → Setting Sail: Pros & Cons]
+
+heroes-service and monsters-service now deploy independently, module boundaries mirror service
+boundaries cleanly, and api-spec gives each service a single shared contract. But the Spring
+Boot, Kotlin, and OpenAPI-codegen setup is now copy-pasted across all three modules — version
+bumps must be repeated everywhere, and there's no shared place to fix a build mistake. It has
+to be fixed three times.
+
+## [ADVANCE → Setting Sail: Conclusion]
+
+Splitting into services won us independent deployability, but it cost us — the same Spring
+Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled three times over, once per module.
+Time to stop copy-pasting build logic.
+
+## [ADVANCE → The Cyclops's Cave: Introduction]
+
+The three modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
+OpenAPI-codegen setup. buildSrc lets us pull that duplicated logic into one convention plugin,
+applied by heroes-service, monsters-service, and api-spec alike — a single source of truth for
+this repo's build logic. The catch: buildSrc only exists inside this repo. Like the Cyclops's
+cave, it's powerful but sealed off — nothing inside it can be reused by any other project
+without copying the whole thing over again.
+
+Odysseus doesn't just sit in the cave and despair — he blinds Polyphemus and escapes by
+lashing himself and his men to the undersides of the cyclops's own sheep, slipping past a
+blinded guard who's only checking for men standing upright. It's the same cleverness some
+teams reach for with buildSrc: pull it in as a git submodule, or copy it out again in CI.
+Clever, and it can work for a while — but it's a trick, not a strategy. The cave is still a
+cave. The moment you need this logic in a third repo, you're back to copying sheep.
+
+## [ADVANCE → The Cyclops's Cave: Schematic View]
+
+Same three modules, but now a fourth box: the buildSrc convention plugin, living inside the
+same repo, feeding its conventions into all three build files. One source of truth — but
+notice the whole diagram is still bounded by a single dashed line marked "one repo." Nothing
+here crosses that boundary.
+
+## [ADVANCE → The Cyclops's Cave: Code Demo]
+
+(Switch to the IDE.) This demo should prove buildSrc genuinely deduplicates the setup: open
+the convention plugin inside buildSrc, show the Spring Boot/Kotlin conventions defined exactly
+once, then show all three modules' build.gradle.kts reduced to a single `plugins { id(...) }`
+line. Then prove the trap: try (or describe trying) to reuse that same buildSrc in a different
+repo, and show there's no way to do it without physically copying the directory. Transition
+out with: "one source of truth, as long as you never leave this repo."
+
+## [ADVANCE → The Cyclops's Cave: Pros & Cons]
+
+Build logic is deduplicated into buildSrc convention plugins, there's one place to fix or
+evolve the Spring Boot/Kotlin conventions, and modules now apply a single plugin id instead
+of hand-rolled blocks. But buildSrc is trapped inside this repo — no other project can reuse
+it, reusing it elsewhere means copy-pasting buildSrc itself, and any change inside buildSrc
+invalidates the whole build's configuration cache.
+
+## [ADVANCE → The Cyclops's Cave: Conclusion]
+
+buildSrc deduplicated the build logic beautifully — one source of truth, for this repo. But
+that's exactly its limit: buildSrc is a cave, not a harbor. Nothing inside it can leave, so
+any other project wanting this build logic has to copy the whole cave.
+
+## [ADVANCE → The Sirens: Introduction]
+
+buildSrc deduplicated our build logic, but dependency versions are still hardcoded and
+drifting across the three modules and buildSrc itself. A version catalog —
+gradle/libs.versions.toml — becomes the single source of truth for every version, referenced
+from every module and buildSrc. Tempting as it sounds, this only solves version drift. It
+doesn't solve the real limitation from the last stage: the build logic itself is still
+landlocked in this one repo.
+
+## [ADVANCE → The Sirens: Schematic View]
+
+The same bounded repo as before, but now a catalog file, libs.versions.toml, feeding version
+numbers into buildSrc and all three modules alike. It looks like it fixes everything — every
+arrow in this diagram still lives inside the same dashed boundary as the Cyclops's cave.
+
+## [ADVANCE → The Sirens: Code Demo]
+
+(Switch to the IDE.) This demo should prove the catalog's real value and its real limit: open
+libs.versions.toml, show one Spring Boot version referenced from buildSrc and all three
+modules, then bump that version in one place and show it propagate everywhere. Then point back
+at buildSrc itself and note that this file, too, would need to be copied into any other repo
+that wanted it. Transition out with: "versions aligned — but we're still steering for the same
+cliffs as before."
+
+## [ADVANCE → The Sirens: Pros & Cons]
+
+One file aligns every dependency version, there's no more version drift between modules and
+buildSrc, and upgrading a library is now a one-line change. But this doesn't solve cross-repo
+reuse — only versions are centralized, not build logic — the catalog file itself must still
+be copy-pasted into any other repo, and its syntax adds a small learning curve versus plain
+version strings.
+
+## [ADVANCE → The Sirens: Conclusion]
+
+Version catalogs centralize what buildSrc alone couldn't: consistent versions across every
+module, with no drift. But the build logic itself is still steering straight for the cliffs —
+trapped in this one repo, with no way to reuse it elsewhere. The real prize, true cross-repo
+reuse, is still ahead.
+
+## [ADVANCE → Ithaca, Regained: Introduction]
+
+Odysseus returns after twenty years to find his own house occupied — the suitors have moved
+in, consuming his estate, each claiming they could take Penelope's hand and Ithaca's throne.
+They're not visitors; they're squatters, scattered claims on something that only has one
+rightful owner. That's what copy-pasted, drifted build logic looks like scattered across a
+dozen repos — each copy claiming to be the real one, none of them in sync. Only one husband
+belongs at Penelope's side, and only one published plugin should define this build logic.
+Reclaiming the house — stringing the bow only the true king can draw, driving out every
+pretender — is publishing the plugin: one authoritative version every project now adopts, no
+copies left standing.
+
+The final transformation: buildSrc's convention plugins are extracted into their own
+standalone Gradle plugin project, build-logic-plugin, published to mavenLocal(). Instead of
+copying build logic into every new repo, heroes-service and monsters-service simply apply it
+via plugins { id(...) } — versioned through the same libs.versions.toml catalog.
+
+This is the payoff for the whole journey: what started as a single module's build.gradle.kts
+is now build logic any project can adopt, with no copying and no drift.
+
+## [ADVANCE → Ithaca, Regained: Schematic View]
+
+Now look at the boundary itself — it's gone. heroes-service, monsters-service, and api-spec
+each live in their own repo, each simply applying build-logic-plugin and the odyssey-catalog,
+both published artifacts sitting outside any single repo's walls. Every arrow in this diagram
+crosses a repo boundary — that's the whole transformation in one picture.
+
+## [ADVANCE → Ithaca, Regained: Code Demo]
+
+(Switch to the IDE.) This demo should prove true cross-repo reuse: open build-logic-plugin as
+its own standalone Gradle project, publish it to mavenLocal(), then switch to heroes-service —
+in a genuinely separate project directory — and show its build.gradle.kts applying the plugin
+via `plugins { id(...) }` with no local file copying involved. Do the same for the catalog.
+Transition out with: "no copying, no drift — this is build logic any project can adopt."
+
+## [ADVANCE → Ithaca, Regained: Pros & Cons]
+
+Build logic is published once and consumed by any project via `plugins { id(...) }` — true
+reuse, with no copy-pasting buildSrc or the catalog into new repos, and a central place to
+version and release build-logic changes. But this adds publishing and versioning ceremony for
+the plugin itself, it requires a real (or local) plugin repository and release discipline, and
+shared build-logic changes now need their own release before consumers pick them up.
+
+## [ADVANCE → Ithaca, Regained: Conclusion]
+
+Home again — the squatters driven out, one true build logic in their place. What started as a
+single module is now build logic any project can adopt, published and versioned like any other
+dependency — no copying, no drift, no cave. The voyage that began with one simple build ends
+with one that scales to as many as you need.
+
+## [ADVANCE → Journey, Complete]
+
+Ithaca: one module, one build — simple, but Hero and Monster couldn't ship independently.
+Setting Sail: split into services won independent deployability, at the cost of copy-pasted
+build setup. The Cyclops's Cave: buildSrc deduplicated that setup — but stayed trapped in this
+repo. The Sirens: a version catalog aligned every dependency — but build logic was still
+landlocked. Ithaca, Regained: buildSrc and the catalog both became published artifacts — true
+reuse, no copying, no drift. That's the odyssey: from a build that couldn't be shared, to one
+that can sail anywhere.
+
+## [ADVANCE → Thank You]
+
+Thank you for sailing this far with me. The repository, the slides, and every stage of this
+build are all in the QR code and the link on screen — go clone it, break it, and reuse what's
+useful. Questions welcome.

@@ -21,6 +21,13 @@ of truth for this repo's build logic.
 The catch: buildSrc only exists inside this repo. Like the Cyclops's cave, it's powerful
 but sealed off — nothing inside it can be reused by any other project without copying the
 whole thing over again.
+
+Odysseus doesn't just sit in the cave and despair — he blinds Polyphemus and escapes by
+lashing himself and his men to the undersides of the cyclops's own sheep, slipping past a
+blinded guard who's only checking for men standing upright. It's the same cleverness some
+teams reach for with buildSrc: pull it in as a git submodule, or copy it out again in CI.
+Clever, and it can work for a while — but it's a trick, not a strategy. The cave is still a
+cave. The moment you need this logic in a third repo, you're back to copying sheep.
 -->
 
 ---
@@ -95,7 +102,7 @@ transition: slide-down
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
-    <h3 style="color: var(--odyssey-gold)">Pros</h3>
+    <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
       <li>Build logic deduplicated into <code>buildSrc</code> convention plugins</li>
       <li>One place to fix or evolve the Spring Boot/Kotlin conventions</li>
@@ -103,7 +110,7 @@ transition: slide-down
     </ul>
   </div>
   <div>
-    <h3 style="color: var(--odyssey-wine)">Cons</h3>
+    <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
       <li><code>buildSrc</code> is trapped inside this repo — no other project can reuse it</li>
       <li>Reusing it elsewhere means copy-pasting <code>buildSrc</code> itself</li>

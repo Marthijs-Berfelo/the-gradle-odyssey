@@ -9,11 +9,15 @@
   --odyssey-parchment: #e8dcc4;
   --odyssey-blue-grey: #a8c5d4;
   --odyssey-wine: #7a1f2b;
+  --odyssey-rose: #ffb3c6;
 }
 
 .slidev-layout {
-  background: linear-gradient(135deg, var(--odyssey-navy) 0%, var(--odyssey-deep-sea) 100%);
-  color: var(--odyssey-parchment);
+  background:
+    radial-gradient(ellipse 90% 60% at 30% 40%, #2a5a74 0%, transparent 60%),
+    radial-gradient(ellipse 90% 60% at 70% 65%, #2d607a 0%, transparent 55%),
+    linear-gradient(135deg, #16374a 0%, #24495c 50%, #16374a 100%);
+  color: var(--odyssey-gold);
 }
 
 .slidev-layout h1,

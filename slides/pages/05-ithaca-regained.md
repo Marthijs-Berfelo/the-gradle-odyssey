@@ -13,6 +13,16 @@ Published, shared plugin — home again, transformed
 `buildSrc` becomes a published plugin — reusable far beyond this repo.
 
 <!--
+Odysseus returns after twenty years to find his own house occupied — the suitors have moved
+in, consuming his estate, each claiming they could take Penelope's hand and Ithaca's throne.
+They're not visitors; they're squatters, scattered claims on something that only has one
+rightful owner. That's what copy-pasted, drifted build logic looks like scattered across a
+dozen repos — each copy claiming to be the real one, none of them in sync. Only one husband
+belongs at Penelope's side, and only one published plugin should define this build logic.
+Reclaiming the house — stringing the bow only the true king can draw, driving out every
+pretender — is publishing the plugin: one authoritative version every project now adopts, no
+copies left standing.
+
 The final transformation: buildSrc's convention plugins are extracted into their own
 standalone Gradle plugin project, build-logic-plugin, published to mavenLocal(). Instead of
 copying build logic into every new repo, heroes-service and monsters-service simply apply
@@ -95,7 +105,7 @@ transition: slide-down
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
-    <h3 style="color: var(--odyssey-gold)">Pros</h3>
+    <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
       <li>Build logic published once, consumed by any project via <code>plugins { id(...) }</code></li>
       <li>True reuse — no copy-pasting <code>buildSrc</code> or the catalog into new repos</li>
@@ -103,7 +113,7 @@ transition: slide-down
     </ul>
   </div>
   <div>
-    <h3 style="color: var(--odyssey-wine)">Cons</h3>
+    <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
       <li>Adds publishing and versioning ceremony for the plugin itself</li>
       <li>Requires a real (or local) plugin repository and release discipline</li>
@@ -122,7 +132,7 @@ transition: slide-left
 
 <div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
-Home again, transformed — build logic any project can adopt, with no copying, no drift.
+Home again — the squatters driven out, one true build logic in their place.
 
 </div>
 

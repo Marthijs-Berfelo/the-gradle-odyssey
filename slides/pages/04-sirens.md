@@ -99,7 +99,7 @@ transition: slide-down
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
-    <h3 style="color: var(--odyssey-gold)">Pros</h3>
+    <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
       <li>One file (<code>libs.versions.toml</code>) aligns every dependency version</li>
       <li>No more version drift between modules and <code>buildSrc</code></li>
@@ -107,7 +107,7 @@ transition: slide-down
     </ul>
   </div>
   <div>
-    <h3 style="color: var(--odyssey-wine)">Cons</h3>
+    <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
       <li>Doesn't solve cross-repo reuse — only versions are centralized, not build logic</li>
       <li>The catalog file itself must still be copy-pasted into any other repo</li>
