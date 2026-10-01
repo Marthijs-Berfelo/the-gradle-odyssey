@@ -18,6 +18,14 @@ One module, **`odyssey-app`**, holds both of our domain entities:
 One build, one deployable.
 
 <!--
+Before the war, Odysseus is content — king of Ithaca, one household, one domain. But he swore
+an oath to Tyndareus: if ever Helen's marriage were threatened, every suitor would rally to
+defend it. When Paris takes her to Troy, Agamemnon calls in that oath, and Odysseus has no
+choice but to sail. One ship can't fight a ten-year siege alone — the campaign demands separate
+forces: infantry, cavalry, the fleet, each moving independently. That's the mobilization order
+our build receives too: Hero and Monster have outgrown the household. They need to become
+separate forces capable of shipping on their own.
+
 Every odyssey begins at home. Our journey starts with odyssey-app — one Gradle module,
 one Spring Boot application, housing both of our domain entities side by side.
 
@@ -82,7 +90,7 @@ transition: slide-down
 
 <div class="grid grid-cols-2 gap-x-8 mt-4">
   <div>
-    <h3 style="color: var(--odyssey-gold)">Pros</h3>
+    <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
       <li>Zero setup — one <code>build.gradle.kts</code>, one command to build and run</li>
       <li>Single dependency graph, trivial to reason about</li>
@@ -90,7 +98,7 @@ transition: slide-down
     </ul>
   </div>
   <div>
-    <h3 style="color: var(--odyssey-wine)">Cons</h3>
+    <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
       <li>Heroes and Monsters can't deploy independently</li>
       <li>A change to either domain forces rebuilding and redeploying both</li>

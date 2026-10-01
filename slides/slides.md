@@ -12,6 +12,29 @@ class: text-center
 transition: slide-left
 ---
 
+<!--
+Let me tell you a story. Long before he was known for a ten-year voyage home, Odysseus was
+a king content to rule Ithaca in peace. But years earlier, he'd sworn an oath — to Tyndareus,
+father of Helen — that if any man ever threatened her marriage, every suitor who'd competed
+for her hand would rally to defend it. When Paris of Troy takes Helen, Agamemnon calls in
+that oath, and Odysseus has no choice but to sail for Troy.
+
+Ten years of siege follow. Troy finally falls, but victory comes at a price: along the way,
+the Greeks offend the gods — blinding Poseidon's son, the Cyclops Polyphemus, and drawing the
+wrath of Hera and Athena. Those offenses curse the journey home. What should have been a
+short sail back to Ithaca stretches into ten more years of monsters, storms, and detours.
+
+Every project build starts the same way — simple, at home, in Ithaca. Then it's called away
+to fight its own Troy: more teams, working on the same product, and the way back home is
+never a straight line — it's full of messy shortcuts taken along the way.
+-->
+
+---
+layout: cover
+transition: slide-left
+class: text-center
+---
+
 # The Gradle Odyssey
 
 <WaveDivider />
@@ -49,6 +72,23 @@ transition: slide-left
     </a>
   </div>
 </div>
+
+<!--
+I'm a software engineer with 10 years of experience. I'm passionate about making fitting software.
+I live in the Netherlands and love to travel, BBQ and code.
+
+Just like Odysseus got his call to arms when Agamemnon invoked that old oath, every codebase
+eventually gets its own call to arms too — more teams, more services, all needing to build on
+the same foundation. Before we set sail, let me take the temperature of the room:
+
+- Who here uses Maven?
+- Who here uses Gradle?
+- Who's copy-pasted a build file between projects?
+
+Whatever you answered, you've felt this problem: reusing Gradle build configuration at scale,
+across projects and teams, without it drifting out of sync. That's the voyage I want to take
+you on today — so let's set sail.
+-->
 
 ---
 transition: fade-out
