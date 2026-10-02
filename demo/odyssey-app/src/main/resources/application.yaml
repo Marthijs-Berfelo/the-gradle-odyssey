@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: odyssey-app
+
+springdoc:
+  swagger-ui:
+    path: /docs
