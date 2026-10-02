@@ -25,8 +25,9 @@ copies left standing.
 
 The final transformation: buildSrc's convention plugins are extracted into their own
 standalone Gradle plugin project, build-logic-plugin, published to mavenLocal(). Instead of
-copying build logic into every new repo, heroes-service and monsters-service simply apply
-it via plugins { id(...) } — versioned through the same libs.versions.toml catalog.
+copying build logic into every new repo, heroes-service, monsters-service, and
+encounters-service simply apply it via plugins { id(...) } — versioned through the same
+libs.versions.toml catalog.
 
 This is the payoff for the whole journey: what started as a single module's build.gradle.kts
 is now build logic any project can adopt, with no copying and no drift.
@@ -58,6 +59,9 @@ flowchart LR
     subgraph m["monsters-service<br/>(own repo)"]
         mb["build.gradle.kts<br/>applies plugin"]:::config
     end
+    subgraph e["encounters-service<br/>(own repo)"]
+        eb["build.gradle.kts<br/>applies plugin"]:::config
+    end
     subgraph a["api-spec<br/>(own repo)"]
         ab["build.gradle.kts<br/>applies plugin"]:::config
     end
@@ -65,13 +69,16 @@ flowchart LR
     catalog["odyssey-catalog<br/>(published)"]:::catalog
     plugin --> hb
     plugin --> mb
+    plugin --> eb
     plugin --> ab
     catalog -->|versions| hb
     catalog -->|versions| mb
+    catalog -->|versions| eb
     catalog -->|versions| ab
     catalog -->|versions| plugin
     style h fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     style m fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
+    style e fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     style a fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
     classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4

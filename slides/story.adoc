@@ -109,50 +109,52 @@ single module can't give them that. Time to set sail.
 
 The voyage is underway, and the crew roster and the bestiary are both growing faster than
 one ship's log can hold — new companions, new monsters, every stop. Ithaca's single module
-splits into three to match: heroes-service and monsters-service become independent Spring
-Boot deployables, each able to ship on its own schedule. A third module, api-spec, holds the
-OpenAPI contract both services depend on — the shared code that lets them talk to each other
-for the /encounters endpoint, the moment a hero actually faces a monster. The catch: each
+splits into four to match: heroes-service, monsters-service, and encounters-service become
+independent Spring Boot deployables, each able to ship on its own schedule. Turns out
+planning for "two services" was itself an off-by-one error — the Encounter needed a
+passport of its own too. A fourth module, api-spec, holds the OpenAPI contract all three
+services depend on — the shared code that lets encounters-service call the other two for
+the /encounters endpoint, the moment a hero actually faces a monster. The catch: each
 module now hand-rolls its own Spring Boot, Kotlin, and OpenAPI-codegen build setup. That
 duplication is this stage's problem to notice.
 
 == [ADVANCE → Setting Sail: Schematic View]
 
-Still one repo, but now three modules: heroes-service, monsters-service, and api-spec. Each
-has its own build.gradle.kts, and both services depend on api-spec for the shared contract.
-Notice there's no line connecting the three build files to each other — that's exactly the
-problem: three independent, duplicated build configurations.
+Still one repo, but now four modules: heroes-service, monsters-service, encounters-service,
+and api-spec. Each has its own build.gradle.kts, and all three services depend on api-spec
+for the shared contract. Notice there's no line connecting the four build files to each
+other — that's exactly the problem: four independent, duplicated build configurations.
 
 == [ADVANCE → Setting Sail: Code Demo]
 
 (Switch to the IDE.) This demo should prove the duplication is real, not hypothetical: open
-heroes-service's build.gradle.kts side by side with monsters-service's, and show the identical
-Spring Boot, Kotlin, and OpenAPI-codegen blocks copy-pasted between them. Transition out with:
-"three copies of the same build logic — one typo in any of them, and we're debugging three
-different builds."
+heroes-service's build.gradle.kts side by side with monsters-service's and encounters-service's,
+and show the identical Spring Boot, Kotlin, and OpenAPI-codegen blocks copy-pasted between
+them. Transition out with: "four copies of the same build logic — one typo in any of them,
+and we're debugging four different builds."
 
 == [ADVANCE → Setting Sail: Pros & Cons]
 
-heroes-service and monsters-service now deploy independently, module boundaries mirror service
-boundaries cleanly, and api-spec gives each service a single shared contract. But the Spring
-Boot, Kotlin, and OpenAPI-codegen setup is now copy-pasted across all three modules — version
-bumps must be repeated everywhere, and there's no shared place to fix a build mistake. It has
-to be fixed three times.
+heroes-service, monsters-service, and encounters-service now deploy independently, module
+boundaries mirror service boundaries cleanly, and api-spec gives each service a single shared
+contract. But the Spring Boot, Kotlin, and OpenAPI-codegen setup is now copy-pasted across all
+four modules — version bumps must be repeated everywhere, and there's no shared place to fix
+a build mistake. It has to be fixed four times.
 
 == [ADVANCE → Setting Sail: Conclusion]
 
 Splitting into services won us independent deployability, but it cost us — the same Spring
-Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled three times over, once per module.
+Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled four times over, once per module.
 Time to stop copy-pasting build logic.
 
 == [ADVANCE → The Cyclops's Cave: Introduction]
 
-The three modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
+The four modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
 OpenAPI-codegen setup. buildSrc lets us pull that duplicated logic into one convention plugin,
-applied by heroes-service, monsters-service, and api-spec alike — a single source of truth for
-this repo's build logic. The catch: buildSrc only exists inside this repo. Like the Cyclops's
-cave, it's powerful but sealed off — nothing inside it can be reused by any other project
-without copying the whole thing over again.
+applied by heroes-service, monsters-service, encounters-service, and api-spec alike — a single
+source of truth for this repo's build logic. The catch: buildSrc only exists inside this repo.
+Like the Cyclops's cave, it's powerful but sealed off — nothing inside it can be reused by any
+other project without copying the whole thing over again.
 
 Odysseus doesn't just sit in the cave and despair — he blinds Polyphemus and escapes by
 lashing himself and his men to the undersides of the cyclops's own sheep, slipping past a
@@ -163,8 +165,8 @@ cave. The moment you need this logic in a third repo, you're back to copying she
 
 == [ADVANCE → The Cyclops's Cave: Schematic View]
 
-Same three modules, but now a fourth box: the buildSrc convention plugin, living inside the
-same repo, feeding its conventions into all three build files. One source of truth — but
+Same four modules, but now a fifth box: the buildSrc convention plugin, living inside the
+same repo, feeding its conventions into all four build files. One source of truth — but
 notice the whole diagram is still bounded by a single dashed line marked "one repo." Nothing
 here crosses that boundary.
 
@@ -172,7 +174,7 @@ here crosses that boundary.
 
 (Switch to the IDE.) This demo should prove buildSrc genuinely deduplicates the setup: open
 the convention plugin inside buildSrc, show the Spring Boot/Kotlin conventions defined exactly
-once, then show all three modules' build.gradle.kts reduced to a single `plugins { id(...) }`
+once, then show all four modules' build.gradle.kts reduced to a single `plugins { id(...) }`
 line. Then prove the trap: try (or describe trying) to reuse that same buildSrc in a different
 repo, and show there's no way to do it without physically copying the directory. Transition
 out with: "one source of truth, as long as you never leave this repo."
@@ -194,7 +196,7 @@ any other project wanting this build logic has to copy the whole cave.
 == [ADVANCE → The Sirens: Introduction]
 
 buildSrc deduplicated our build logic, but dependency versions are still hardcoded and
-drifting across the three modules and buildSrc itself. A version catalog —
+drifting across the four modules and buildSrc itself. A version catalog —
 gradle/libs.versions.toml — becomes the single source of truth for every version, referenced
 from every module and buildSrc. Tempting as it sounds, this only solves version drift. It
 doesn't solve the real limitation from the last stage: the build logic itself is still
@@ -203,13 +205,13 @@ landlocked in this one repo.
 == [ADVANCE → The Sirens: Schematic View]
 
 The same bounded repo as before, but now a catalog file, libs.versions.toml, feeding version
-numbers into buildSrc and all three modules alike. It looks like it fixes everything — every
+numbers into buildSrc and all four modules alike. It looks like it fixes everything — every
 arrow in this diagram still lives inside the same dashed boundary as the Cyclops's cave.
 
 == [ADVANCE → The Sirens: Code Demo]
 
 (Switch to the IDE.) This demo should prove the catalog's real value and its real limit: open
-libs.versions.toml, show one Spring Boot version referenced from buildSrc and all three
+libs.versions.toml, show one Spring Boot version referenced from buildSrc and all four
 modules, then bump that version in one place and show it propagate everywhere. Then point back
 at buildSrc itself and note that this file, too, would need to be copied into any other repo
 that wanted it. Transition out with: "versions aligned — but we're still steering for the same
@@ -244,18 +246,20 @@ copies left standing.
 
 The final transformation: buildSrc's convention plugins are extracted into their own
 standalone Gradle plugin project, build-logic-plugin, published to mavenLocal(). Instead of
-copying build logic into every new repo, heroes-service and monsters-service simply apply it
-via plugins { id(...) } — versioned through the same libs.versions.toml catalog.
+copying build logic into every new repo, heroes-service, monsters-service, and
+encounters-service simply apply it via plugins { id(...) } — versioned through the same
+libs.versions.toml catalog.
 
 This is the payoff for the whole journey: what started as a single module's build.gradle.kts
 is now build logic any project can adopt, with no copying and no drift.
 
 == [ADVANCE → Ithaca, Regained: Schematic View]
 
-Now look at the boundary itself — it's gone. heroes-service, monsters-service, and api-spec
-each live in their own repo, each simply applying build-logic-plugin and the odyssey-catalog,
-both published artifacts sitting outside any single repo's walls. Every arrow in this diagram
-crosses a repo boundary — that's the whole transformation in one picture.
+Now look at the boundary itself — it's gone. heroes-service, monsters-service,
+encounters-service, and api-spec each live in their own repo, each simply applying
+build-logic-plugin and the odyssey-catalog, both published artifacts sitting outside any
+single repo's walls. Every arrow in this diagram crosses a repo boundary — that's the whole
+transformation in one picture.
 
 == [ADVANCE → Ithaca, Regained: Code Demo]
 

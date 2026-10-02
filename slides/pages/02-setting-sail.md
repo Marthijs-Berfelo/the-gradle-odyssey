@@ -10,13 +10,15 @@ Multi-module build — a fleet of modules, one voyage
 
 <br/>
 
-Hero and Monster set sail as their own services, sharing one `api-spec`.
+Hero, Monster, and Encounter set sail as their own services, sharing one `api-spec`.
 
 <!--
-Ithaca's single module splits into three: heroes-service and monsters-service become
-independent Spring Boot deployables, each able to ship on its own schedule. A third module,
-api-spec, holds the OpenAPI contract both services depend on — the shared code that lets
-them talk to each other for the /encounters endpoint.
+Ithaca's single module splits into four: heroes-service, monsters-service, and
+encounters-service become independent Spring Boot deployables, each able to ship on its
+own schedule. Turns out planning for "two services" was itself an off-by-one error —
+Encounter wanted a passport of its own too. A fourth module, api-spec, holds the OpenAPI
+contract all three services depend on — the shared code that lets encounters-service call
+the other two to resolve the /encounters endpoint.
 
 The catch: each module now hand-rolls its own Spring Boot, Kotlin, and OpenAPI-codegen
 build setup. That duplication is this stage's problem to notice.
@@ -50,15 +52,20 @@ flowchart LR
         subgraph m["monsters-service"]
             mb["build.gradle.kts"]:::config
         end
+        subgraph e["encounters-service"]
+            eb["build.gradle.kts"]:::config
+        end
         subgraph a["api-spec"]
             ab["build.gradle.kts"]:::config
         end
         h --> a
         m --> a
+        e --> a
     end
     style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style e fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
 ```
@@ -91,17 +98,17 @@ transition: slide-down
   <div>
     <h3 style="color: var(--odyssey-gold); font-weight: 700">Pros</h3>
     <ul>
-      <li><code>heroes-service</code> and <code>monsters-service</code> deploy independently</li>
+      <li><code>heroes-service</code>, <code>monsters-service</code>, and <code>encounters-service</code> deploy independently</li>
       <li>Clear module boundaries mirror service boundaries</li>
-      <li><code>api-spec</code> gives each service a single shared contract</li>
+      <li><code>api-spec</code> gives every service a single shared contract</li>
     </ul>
   </div>
   <div>
     <h3 style="color: var(--odyssey-rose); font-weight: 700">Cons</h3>
     <ul>
-      <li>Spring Boot, Kotlin, and OpenAPI-codegen setup copy-pasted across 3 modules</li>
+      <li>Spring Boot, Kotlin, and OpenAPI-codegen setup copy-pasted across 4 modules</li>
       <li>Version bumps must be repeated in every module's <code>build.gradle.kts</code></li>
-      <li>No shared place to fix a build mistake — it must be fixed three times</li>
+      <li>No shared place to fix a build mistake — it must be fixed four times</li>
     </ul>
   </div>
 </div>
@@ -116,12 +123,12 @@ transition: slide-left
 
 <div class="absolute inset-0 flex items-center justify-center text-center text-xl px-20">
 
-Independent deployability, at the cost of the same build setup — copy-pasted three times over.
+Independent deployability, at the cost of the same build setup — copy-pasted four times over.
 
 </div>
 
 <!--
 Splitting into services won us independent deployability, but it cost us — the same
-Spring Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled three times over,
+Spring Boot, Kotlin, and OpenAPI-codegen setup is now hand-rolled four times over,
 once per module. Time to stop copy-pasting build logic.
 -->

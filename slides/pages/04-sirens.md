@@ -50,23 +50,30 @@ flowchart LR
         subgraph m["monsters-service"]
             mb["build.gradle.kts<br/>applies plugin"]:::config
         end
+        subgraph e["encounters-service"]
+            eb["build.gradle.kts<br/>applies plugin"]:::config
+        end
         subgraph a["api-spec"]
             ab["build.gradle.kts<br/>applies plugin"]:::config
         end
         plugin["buildSrc<br/>convention plugin"]:::plugin
         plugin -.-> hb
         plugin -.-> mb
+        plugin -.-> eb
         plugin -.-> ab
         h --> a
         m --> a
+        e --> a
     end
     catalog -.->|versions| plugin
     catalog -.->|versions| hb
     catalog -.->|versions| mb
+    catalog -.->|versions| eb
     catalog -.->|versions| ab
     style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style e fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
     classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
