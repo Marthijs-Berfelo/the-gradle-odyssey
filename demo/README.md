@@ -4,6 +4,25 @@ Each of the 5 talk stages is a git tag; this folder's scripts turn those tags in
 separate, independent working directories (git worktrees) so a live-coding mistake in
 one stage never touches another.
 
+## Prerequisites
+
+Each stage is a Spring Boot app that needs a Java 25 toolchain and a running Docker
+daemon (Testcontainers spins up Postgres on demand — no manual database setup).
+
+```bash
+# Java 25 toolchain is installed and discoverable
+/usr/libexec/java_home -v 25
+
+# Docker is running
+docker info --format '{{.ServerVersion}}'
+```
+
+If the Java check fails, install a JDK 25 (e.g. via `sdkman` or your platform's
+package manager) — Gradle's toolchain support will pick it up automatically once
+`java_home` can find it. If the Docker check errors instead of printing a version,
+start Docker Desktop before continuing; every stage's tests and `bootTestRun` depend
+on it.
+
 ## One-time setup
 
 Add this to your shell rc (`~/.zshrc` or `~/.bashrc`):
@@ -28,3 +47,26 @@ stage 01-ithaca            # <TAB> completes stage names
 
 If a live edit breaks something mid-stage, just `stage <next-stage-name>` — the next
 stage's worktree is untouched.
+
+## Verifying a stage from scratch
+
+To confirm a stage's worktree is fully working — useful right after `checkout-stages.sh`,
+or before walking on stage:
+
+```bash
+stage 01-ithaca
+./gradlew test                # full suite, spins up Postgres via Testcontainers
+./gradlew bootTestRun &        # starts the app against an ephemeral Postgres
+until curl -s -o /dev/null localhost:8080/heroes; do sleep 1; done
+
+curl -s -X POST localhost:8080/heroes -H 'Content-Type: application/json' \
+  -d '{"name":"Odysseus","epithet":"the Cunning","strength":9}'
+curl -s -X POST localhost:8080/monsters -H 'Content-Type: application/json' \
+  -d '{"name":"Polyphemus","domain":"cave","danger":7}'
+curl -s -X POST localhost:8080/encounters -H 'Content-Type: application/json' \
+  -d '{"heroId":1,"monsterId":1}'
+# -> {"heroId":1,"monsterId":1,"outcome":"hero wins"}
+
+open http://localhost:8080/docs  # Swagger UI
+kill %1                          # stop bootTestRun
+```
