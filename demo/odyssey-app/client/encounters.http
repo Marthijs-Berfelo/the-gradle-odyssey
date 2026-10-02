@@ -1,0 +1,8 @@
+### Resolve an encounter (uses heroId/monsterId captured from heroes.http and monsters.http)
+POST {{encountersBase}}/encounters
+Content-Type: application/json
+
+{
+  "heroId": {{heroId}},
+  "monsterId": {{monsterId}}
+}

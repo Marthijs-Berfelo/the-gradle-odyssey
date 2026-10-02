@@ -1,0 +1,16 @@
+### Create a monster
+POST {{monstersBase}}/monsters
+Content-Type: application/json
+
+{
+  "name": "Polyphemus",
+  "domain": "cave",
+  "danger": 7
+}
+
+> {%
+    client.global.set("monsterId", response.body.id);
+%}
+
+### List monsters
+GET {{monstersBase}}/monsters
