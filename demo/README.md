@@ -57,7 +57,11 @@ or before walking on stage:
 stage 01-ithaca
 ./gradlew test                # full suite, spins up Postgres via Testcontainers
 ./gradlew bootTestRun &        # starts the app against an ephemeral Postgres
-until curl -s -o /dev/null localhost:8080/heroes; do sleep 1; done
+
+# readiness only turns UP once Flyway has migrated and the R2DBC pool is live
+until curl -s localhost:8080/actuator/health/readiness | grep -q '"status":"UP"'; do
+  sleep 1
+done
 
 curl -s -X POST localhost:8080/heroes -H 'Content-Type: application/json' \
   -d '{"name":"Odysseus","epithet":"the Cunning","strength":9}'
