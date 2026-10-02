@@ -10,13 +10,13 @@ transition: slide-up
 
 <br/>
 
-One `buildSrc` convention plugin replaces three copies of build boilerplate.
+One `buildSrc` convention plugin replaces four copies of build boilerplate.
 
 <!--
-The three modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
+The four modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
 OpenAPI-codegen setup. buildSrc lets us pull that duplicated logic into one convention
-plugin, applied by heroes-service, monsters-service, and api-spec alike — a single source
-of truth for this repo's build logic.
+plugin, applied by heroes-service, monsters-service, encounters-service, and api-spec
+alike — a single source of truth for this repo's build logic.
 
 The catch: buildSrc only exists inside this repo. Like the Cyclops's cave, it's powerful
 but sealed off — nothing inside it can be reused by any other project without copying the
@@ -58,19 +58,25 @@ flowchart LR
         subgraph m["monsters-service"]
             mb["build.gradle.kts<br/>applies plugin"]:::config
         end
+        subgraph e["encounters-service"]
+            eb["build.gradle.kts<br/>applies plugin"]:::config
+        end
         subgraph a["api-spec"]
             ab["build.gradle.kts<br/>applies plugin"]:::config
         end
         plugin["buildSrc<br/>convention plugin"]:::plugin
         plugin -.-> hb
         plugin -.-> mb
+        plugin -.-> eb
         plugin -.-> ab
         h --> a
         m --> a
+        e --> a
     end
     style repo fill:#0d1b2a,stroke:#d4af37,stroke-width:2px,stroke-dasharray:4 4
     style h fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style m fill:#3d2f14,stroke:#d4af37,stroke-width:1px
+    style e fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     style a fill:#3d2f14,stroke:#d4af37,stroke-width:1px
     classDef config fill:#7a1f2b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
     classDef plugin fill:#1b3a4b,stroke:#d4af37,stroke-width:2px,color:#e8dcc4
