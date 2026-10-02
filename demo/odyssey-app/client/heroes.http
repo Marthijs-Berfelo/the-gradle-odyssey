@@ -1,0 +1,16 @@
+### Create a hero
+POST {{heroesBase}}/heroes
+Content-Type: application/json
+
+{
+  "name": "Odysseus",
+  "epithet": "the Cunning",
+  "strength": 9
+}
+
+> {%
+    client.global.set("heroId", response.body.id);
+%}
+
+### List heroes
+GET {{heroesBase}}/heroes

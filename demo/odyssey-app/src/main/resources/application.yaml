@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: odyssey-app
+  webflux:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /docs
