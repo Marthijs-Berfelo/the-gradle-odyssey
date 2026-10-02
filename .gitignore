@@ -23,5 +23,8 @@ feedback.md
 # OS
 .DS_Store
 
+# Demo stage worktrees (rebuilt from tags, never committed)
+demo/.worktrees/
+
 # Rehearsal script export
 slides/story.pdf
