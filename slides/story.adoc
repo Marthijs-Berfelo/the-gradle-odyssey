@@ -51,27 +51,26 @@ you on today.
 == [ADVANCE → Journey Trail Slide]
 
 Odysseus had no idea how long the way home would be — if he had, he might never have set
-sail. Our journey has five stops: Ithaca, where every build starts simple; Setting Sail,
-where splitting into services costs us duplicated setup; the Cyclops's Cave, where buildSrc
-deduplicates that setup but traps it in one repo; the Sirens, where a version catalog tempts
-us with a partial fix; and Ithaca Regained, where we finally publish build logic the way any
-project can adopt it. Let's set sail.
+sail. Our journey has five stops:
+
+* Ithaca, where every build starts simple
+* Setting Sail, where splitting into services costs us duplicated setup
+* The Cyclops's Cave, where buildSrc deduplicates that setup but traps it in one repo
+* The Sirens, where a version catalog tempts us with a partial fix
+* Ithaca Regained, where we finally publish build logic the way any project can adopt it
+
+Let's set sail.
 
 == [ADVANCE → Ithaca: Introduction]
 
-Before the war, Odysseus is content — king of Ithaca, one household, one domain. But he swore
-an oath to Tyndareus: if ever Helen's marriage were threatened, every suitor would rally to
-defend it. When Paris takes her to Troy, Agamemnon calls in that oath, and Odysseus has no
-choice but to sail. One ship can't fight a ten-year siege alone — the campaign demands separate
-forces: infantry, cavalry, the fleet, each moving independently. That's the mobilization order
-our build receives too: Hero and Monster have outgrown the household. They need to become
-separate forces capable of shipping on their own.
+Remember that curse on the way home — "ten more years of monsters, storms, and detours."
+That's not just scenery. Every stop on the voyage is a Hero, Odysseus's surviving crew,
+facing down a Monster: the Cyclops, Scylla, the Laestrygonians. Our demo tracks exactly
+that — Heroes, Monsters, and the Encounter between them that decides who makes it home.
+Right now, at the very start of the journey, both still live together under one roof.
 
 Every odyssey begins at home. Our journey starts with odyssey-app — one Gradle module,
-one Spring Boot application, housing both of our domain entities side by side.
-
-A single build.gradle.kts wires up Spring Boot, Kotlin, R2DBC, and Flyway for the whole app.
-No modules to split, no boundaries to cross — just one build, one deployable, one place to look.
+one Spring Boot application, housing Hero and Monster side by side.
 
 == [ADVANCE → Ithaca: Schematic View]
 
@@ -85,8 +84,12 @@ whole point of this stage.
 (Switch to the IDE.) This demo should prove just how little ceremony a single-module build
 needs: open odyssey-app's build.gradle.kts, show the Spring Boot, Kotlin, R2DBC, and Flyway
 plugins all declared once, then run the app and show both the hero and monster endpoints
-answering from the same running process. Transition out with: "simple, clean — but watch
-what happens when Hero and Monster need to stop shipping together."
+answering from the same running process. Worth a quick aside while in the code: Hero and
+Monster already follow the same controller-service-repository layering, each with its own
+DTOs, domain objects, and database entities kept separate — not because one module needs
+that discipline, but because it's the shape Stage 2's service split inherits unchanged.
+Transition out with: "simple, clean — but watch what happens when Hero and Monster need to
+stop shipping together."
 
 == [ADVANCE → Ithaca: Pros & Cons]
 
@@ -104,12 +107,14 @@ single module can't give them that. Time to set sail.
 
 == [ADVANCE → Setting Sail: Introduction]
 
-Ithaca's single module splits into three: heroes-service and monsters-service become
-independent Spring Boot deployables, each able to ship on its own schedule. A third module,
-api-spec, holds the OpenAPI contract both services depend on — the shared code that lets them
-talk to each other for the /encounters endpoint. The catch: each module now hand-rolls its own
-Spring Boot, Kotlin, and OpenAPI-codegen build setup. That duplication is this stage's problem
-to notice.
+The voyage is underway, and the crew roster and the bestiary are both growing faster than
+one ship's log can hold — new companions, new monsters, every stop. Ithaca's single module
+splits into three to match: heroes-service and monsters-service become independent Spring
+Boot deployables, each able to ship on its own schedule. A third module, api-spec, holds the
+OpenAPI contract both services depend on — the shared code that lets them talk to each other
+for the /encounters endpoint, the moment a hero actually faces a monster. The catch: each
+module now hand-rolls its own Spring Boot, Kotlin, and OpenAPI-codegen build setup. That
+duplication is this stage's problem to notice.
 
 == [ADVANCE → Setting Sail: Schematic View]
 
