@@ -9,7 +9,7 @@ fonts:
   serif: 'Cormorant Garamond'
   provider: google
 class: text-center
-transition: slide-left
+transition: fade-out
 ---
 
 <!--
@@ -31,7 +31,7 @@ never a straight line — it's full of messy shortcuts taken along the way.
 
 ---
 layout: cover
-transition: slide-left
+transition: fade-out
 class: text-center
 ---
 
