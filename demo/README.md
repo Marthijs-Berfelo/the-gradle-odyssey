@@ -83,23 +83,45 @@ To confirm a stage's worktree is fully working — useful right after `checkout-
 or before walking on stage:
 
 ```bash
-stage 01-ithaca
-./gradlew test                # full suite, spins up Postgres via Testcontainers
-./gradlew bootTestRun &        # starts the app against an ephemeral Postgres
+stage 02-setting-sail
+./gradlew test                          # full suite across all four modules
+./gradlew :heroes-service:bootTestRun &
+./gradlew :monsters-service:bootTestRun &
+./gradlew :encounters-service:bootTestRun &
 
 # readiness only turns UP once Flyway has migrated and the R2DBC pool is live
-until curl -s localhost:8080/actuator/health/readiness | grep -q '"status":"UP"'; do
-  sleep 1
-done
+until curl -s localhost:8081/actuator/health/readiness | grep -q '"status":"UP"'; do sleep 1; done
+until curl -s localhost:8082/actuator/health/readiness | grep -q '"status":"UP"'; do sleep 1; done
+until curl -s localhost:8083/actuator/health/readiness | grep -q '"status":"UP"'; do sleep 1; done
 
-curl -s -X POST localhost:8080/heroes -H 'Content-Type: application/json' \
+curl -s -X POST localhost:8081/heroes -H 'Content-Type: application/json' \
   -d '{"name":"Odysseus","epithet":"the Cunning","strength":9}'
-curl -s -X POST localhost:8080/monsters -H 'Content-Type: application/json' \
+curl -s -X POST localhost:8082/monsters -H 'Content-Type: application/json' \
   -d '{"name":"Polyphemus","domain":"cave","danger":7}'
-curl -s -X POST localhost:8080/encounters -H 'Content-Type: application/json' \
+curl -s -X POST localhost:8083/encounters -H 'Content-Type: application/json' \
   -d '{"heroId":1,"monsterId":1}'
 # -> {"heroId":1,"monsterId":1,"outcome":"hero wins"}
 
-open http://localhost:8080/docs  # Swagger UI
-kill %1                          # stop bootTestRun
+open http://localhost:8081/docs  # Swagger UI, repeat on 8082/8083 as needed
+kill %1 %2 %3                    # stop all three bootTestRun processes
 ```
+
+### Gradle caches and stale state
+
+Once a stage's build is multi-module, both of Gradle's caches become more visible during
+rehearsal/live-coding and need a documented reset path so a stale cache doesn't produce a
+confusing on-stage result:
+
+- **Build cache** (task output cache, local — `~/.gradle/caches/build-cache-1/`): if enabled
+  (`org.gradle.caching=true` in `gradle.properties`, not currently set in this repo), reset
+  with `./gradlew clean --no-build-cache` for a one-off run, or delete the cache directory
+  outright (`rm -rf ~/.gradle/caches/build-cache-1`) to force every module to rebuild from
+  scratch.
+- **Configuration cache** (`org.gradle.configuration-cache=true`, not currently set either):
+  reset with `./gradlew <task> --no-configuration-cache` for a one-off run, or delete the
+  stored entries (`rm -rf <stage-dir>/.gradle/configuration-cache`) to force reconfiguration.
+  Any `buildSrc` change invalidates the whole build's configuration cache — relevant from
+  Stage 3 onward, where a presenter hitting a stale/invalid cache mid-demo should know this
+  is the fix, not a sign something is broken.
+
+Neither flag is turned on in this repo's `gradle.properties` as of Stage 2.

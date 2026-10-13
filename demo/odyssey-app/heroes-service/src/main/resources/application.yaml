@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: heroes-service
+  webflux:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /docs

@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Odyssey API
+  version: "1.0.0"
+paths:
+  /heroes:
+    get:
+      tags: [Hero]
+      operationId: listHeroes
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HeroDTO'
+    post:
+      tags: [Hero]
+      operationId: createHero
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeroRequestDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeroDTO'
+  /heroes/{id}:
+    get:
+      tags: [Hero]
+      operationId: getHeroById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeroDTO'
+        "404":
+          description: Not found
+  /monsters:
+    get:
+      tags: [Monster]
+      operationId: listMonsters
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonsterDTO'
+    post:
+      tags: [Monster]
+      operationId: createMonster
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonsterRequestDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonsterDTO'
+  /monsters/{id}:
+    get:
+      tags: [Monster]
+      operationId: getMonsterById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonsterDTO'
+        "404":
+          description: Not found
+  /encounters:
+    post:
+      tags: [Encounter]
+      operationId: resolveEncounter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncounterRequestDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncounterDTO'
+components:
+  schemas:
+    HeroRequestDTO:
+      type: object
+      required: [name, epithet, strength]
+      properties:
+        name: { type: string }
+        epithet: { type: string }
+        strength: { type: integer, format: int32 }
+    HeroDTO:
+      type: object
+      required: [id, name, epithet, strength]
+      properties:
+        id: { type: integer, format: int64 }
+        name: { type: string }
+        epithet: { type: string }
+        strength: { type: integer, format: int32 }
+    MonsterRequestDTO:
+      type: object
+      required: [name, domain, danger]
+      properties:
+        name: { type: string }
+        domain: { type: string }
+        danger: { type: integer, format: int32 }
+    MonsterDTO:
+      type: object
+      required: [id, name, domain, danger]
+      properties:
+        id: { type: integer, format: int64 }
+        name: { type: string }
+        domain: { type: string }
+        danger: { type: integer, format: int32 }
+    EncounterRequestDTO:
+      type: object
+      required: [heroId, monsterId]
+      properties:
+        heroId: { type: integer, format: int64 }
+        monsterId: { type: integer, format: int64 }
+    EncounterDTO:
+      type: object
+      required: [heroId, monsterId, outcome]
+      properties:
+        heroId: { type: integer, format: int64 }
+        monsterId: { type: integer, format: int64 }
+        outcome: { type: string }
