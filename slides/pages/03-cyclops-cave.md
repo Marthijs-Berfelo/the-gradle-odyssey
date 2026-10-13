@@ -15,7 +15,7 @@ One `buildSrc` convention plugin replaces four copies of build boilerplate.
 <!--
 The four modules from Setting Sail each hand-rolled their own Spring Boot, Kotlin, and
 OpenAPI-codegen setup. buildSrc lets us pull that duplicated logic into one convention
-plugin, applied by heroes-service, monsters-service, encounters-service, and api-spec
+plugin, applied by heroes-service, monsters-service, encounters-service, and odyssey-api
 alike — a single source of truth for this repo's build logic.
 
 The catch: buildSrc only exists inside this repo. Like the Cyclops's cave, it's powerful
@@ -61,7 +61,7 @@ flowchart LR
         subgraph e["encounters-service"]
             eb["build.gradle.kts<br/>applies plugin"]:::config
         end
-        subgraph a["api-spec"]
+        subgraph a["odyssey-api"]
             ab["build.gradle.kts<br/>applies plugin"]:::config
         end
         plugin["buildSrc<br/>convention plugin"]:::plugin

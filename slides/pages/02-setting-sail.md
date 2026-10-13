@@ -16,7 +16,7 @@ Hero, Monster, and Encounter set sail as their own services, sharing one `api-sp
 Ithaca's single module splits into four: heroes-service, monsters-service, and
 encounters-service become independent Spring Boot deployables, each able to ship on its
 own schedule. Turns out planning for "two services" was itself an off-by-one error —
-Encounter wanted a passport of its own too. A fourth module, api-spec, holds the OpenAPI
+Encounter wanted a passport of its own too. A fourth module, odyssey-api, holds the OpenAPI
 contract all three services depend on — the shared code that lets encounters-service call
 the other two to resolve the /encounters endpoint.
 
@@ -55,7 +55,7 @@ flowchart LR
         subgraph e["encounters-service"]
             eb["build.gradle.kts"]:::config
         end
-        subgraph a["api-spec"]
+        subgraph a["odyssey-api"]
             ab["build.gradle.kts"]:::config
         end
         h --> a
@@ -100,7 +100,7 @@ transition: slide-down
     <ul>
       <li><code>heroes-service</code>, <code>monsters-service</code>, and <code>encounters-service</code> deploy independently</li>
       <li>Clear module boundaries mirror service boundaries</li>
-      <li><code>api-spec</code> gives every service a single shared contract</li>
+      <li><code>odyssey-api</code> gives every service a single shared contract</li>
     </ul>
   </div>
   <div>
