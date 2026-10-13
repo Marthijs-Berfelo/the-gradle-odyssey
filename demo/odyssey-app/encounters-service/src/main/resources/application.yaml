@@ -1,0 +1,17 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: encounters-service
+  webflux:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+services:
+  heroes-base-url: http://localhost:8081
+  monsters-base-url: http://localhost:8082
