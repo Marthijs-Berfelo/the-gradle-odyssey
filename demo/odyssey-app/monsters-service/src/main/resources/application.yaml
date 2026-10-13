@@ -1,0 +1,13 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: monsters-service
+  webflux:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /docs
