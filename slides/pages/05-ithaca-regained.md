@@ -62,7 +62,7 @@ flowchart LR
     subgraph e["encounters-service<br/>(own repo)"]
         eb["build.gradle.kts<br/>applies plugin"]:::config
     end
-    subgraph a["api-spec<br/>(own repo)"]
+    subgraph a["odyssey-api<br/>(own repo)"]
         ab["build.gradle.kts<br/>applies plugin"]:::config
     end
     plugin["build-logic-plugin<br/>(published)"]:::plugin

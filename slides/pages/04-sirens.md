@@ -53,7 +53,7 @@ flowchart LR
         subgraph e["encounters-service"]
             eb["build.gradle.kts<br/>applies plugin"]:::config
         end
-        subgraph a["api-spec"]
+        subgraph a["odyssey-api"]
             ab["build.gradle.kts<br/>applies plugin"]:::config
         end
         plugin["buildSrc<br/>convention plugin"]:::plugin
