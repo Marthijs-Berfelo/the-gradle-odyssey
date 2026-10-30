@@ -1,0 +1,83 @@
+[versions]
+kotlin = "2.4.21"
+springBoot = "4.1.1"
+ktlintGradle = "14.2.0"
+openapiGenerator = "7.25.0"
+springdocOpenapi = "3.1.0"
+swaggerAnnotations = "2.2.54"
+wiremockSpringBoot = "4.4.2"
+
+[libraries]
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "springBoot" }
+ktlint-gradle-plugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlintGradle" }
+openapi-generator-gradle-plugin = { module = "org.openapitools:openapi-generator-gradle-plugin", version.ref = "openapiGenerator" }
+springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "springdocOpenapi" }
+swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swaggerAnnotations" }
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springBoot" }
+wiremock-spring-boot = { module = "org.wiremock.integrations:wiremock-spring-boot", version.ref = "wiremockSpringBoot" }
+
+# Platform-managed (version resolved via the Spring Boot Gradle plugin's own dependency
+# management today, hence no version/version.ref here — the catalog centralizes the
+# coordinate, not a version that doesn't exist yet to centralize).
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-actuator-test = { module = "org.springframework.boot:spring-boot-starter-actuator-test" }
+spring-boot-starter-data-r2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc" }
+spring-boot-starter-data-r2dbc-test = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc-test" }
+spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
+spring-boot-starter-flyway-test = { module = "org.springframework.boot:spring-boot-starter-flyway-test" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-validation-test = { module = "org.springframework.boot:spring-boot-starter-validation-test" }
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-webflux-test = { module = "org.springframework.boot:spring-boot-starter-webflux-test" }
+spring-boot-starter-webclient = { module = "org.springframework.boot:spring-boot-starter-webclient" }
+spring-boot-starter-webclient-test = { module = "org.springframework.boot:spring-boot-starter-webclient-test" }
+spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
+reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
+spring-jdbc = { module = "org.springframework:spring-jdbc" }
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin" }
+r2dbc-postgresql = { module = "org.postgresql:r2dbc-postgresql" }
+postgresql = { module = "org.postgresql:postgresql" }
+flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter" }
+testcontainers-r2dbc = { module = "org.testcontainers:testcontainers-r2dbc" }
+testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[bundles]
+api = [
+    "spring-boot-starter-webflux",
+    "spring-boot-starter-validation",
+    "kotlinx-coroutines-reactor",
+    "kotlin-reflect",
+    "swagger-annotations",
+]
+common = [
+    "spring-boot-starter-actuator",
+    "reactor-kotlin-extensions",
+    "springdoc-openapi-starter-webflux-ui",
+    "jackson-module-kotlin",
+]
+server = ["spring-boot-starter-data-r2dbc", "spring-boot-starter-flyway", "spring-jdbc"]
+client = ["spring-boot-starter-webclient"]
+test = [
+    "spring-boot-starter-actuator-test",
+    "spring-boot-starter-validation-test",
+    "spring-boot-starter-webflux-test",
+    "kotlin-test-junit5",
+    "kotlinx-coroutines-test",
+    "testcontainers-junit-jupiter",
+]
+server-test = [
+    "spring-boot-starter-data-r2dbc-test",
+    "spring-boot-starter-flyway-test",
+    "spring-boot-testcontainers",
+    "testcontainers-r2dbc",
+    "testcontainers-postgresql",
+]
+client-test = ["spring-boot-starter-webclient-test", "wiremock-spring-boot"]
