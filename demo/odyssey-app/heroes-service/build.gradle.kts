@@ -1,5 +1,5 @@
 plugins {
-    id("gr.odyssey.spring-service")
+    alias(libs.plugins.odyssey.spring.service)
 }
 
 group = "gr.odyssey"
