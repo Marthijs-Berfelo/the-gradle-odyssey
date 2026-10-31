@@ -6,6 +6,7 @@ openapiGenerator = "7.25.0"
 springdocOpenapi = "3.1.0"
 swaggerAnnotations = "2.2.54"
 wiremockSpringBoot = "4.4.2"
+buildLogicPlugin = "1.0.0"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -81,3 +82,7 @@ server-test = [
     "testcontainers-postgresql",
 ]
 client-test = ["spring-boot-starter-webclient-test", "wiremock-spring-boot"]
+
+[plugins]
+odyssey-spring-service = { id = "gr.odyssey.spring-service", version.ref = "buildLogicPlugin" }
+odyssey-openapi-codegen = { id = "gr.odyssey.openapi-codegen", version.ref = "buildLogicPlugin" }

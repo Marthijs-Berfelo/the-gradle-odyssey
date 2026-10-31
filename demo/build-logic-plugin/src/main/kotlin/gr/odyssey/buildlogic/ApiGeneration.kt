@@ -1,3 +1,5 @@
+package gr.odyssey.buildlogic
+
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.register
@@ -82,11 +84,11 @@ fun Project.configureApiGeneration(
         codegenTasks += generateClientApi
     }
 
-    the<KotlinJvmProjectExtension>().sourceSets.named("main") {
-        kotlin.srcDirs(generatedSourceDirs)
+    the<KotlinJvmProjectExtension>().sourceSets.named("main") { sourceSet ->
+        sourceSet.kotlin.srcDirs(generatedSourceDirs)
     }
 
-    tasks.named("compileKotlin") {
-        dependsOn(codegenTasks)
+    tasks.named("compileKotlin") { task ->
+        task.dependsOn(codegenTasks)
     }
 }
